@@ -39,8 +39,6 @@ Example usage of the role:
   vars:
     user_info:
       - name: ansible-user
-        password: <your openssl hash>
-        key: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICGzwrDAfrzylGJsj9i9bcNnduC34FaLLJZd3uzMk/fV user@hulk'
         home: /opt/aap
 
   tasks:
