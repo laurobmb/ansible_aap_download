@@ -1,0 +1,77 @@
+---
+- name: Criando usuário
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    comment: "Usuario de instalacao do AAP"
+    shell: /bin/bash
+    home: "{{ item.home }}"
+  with_items: "{{ user_info }}"
+
+- name: Criando directory SSHKEY
+  ansible.builtin.file:
+    path: "{{ item.home }}/.ssh"
+    state: directory
+    owner: "{{ item.name }}"
+    mode: '0700'
+  with_items: "{{ user_info }}"
+
+- name: Add authorized keys for users
+  ansible.builtin.blockinfile:
+    state: present
+    path: "{{ item.home }}/.ssh/authorized_keys"
+    block: |
+      {{ item.key }}
+    marker: "# <!-- {mark} ANSIBLE MANAGED BLOCK {{ item.name }} -->"
+    backup: true
+    create: true
+    owner: "{{ item.name }}"
+    mode: '0644'
+  with_items: "{{ user_info }}"
+
+- name: Adicionando arquivo de sudoers
+  ansible.builtin.blockinfile:
+    dest: /etc/sudoers.d/admin_{{ item.name }}
+    marker: "# {mark} ANSIBLE CONFIG sudoers"
+    state: present
+    block: |
+        {{ item.name }} ALL = (root) NOPASSWD:ALL
+    create: true
+    mode: '0700'
+  with_items: "{{ user_info }}"
+
+- name: Generate an OpenSSH keypair ECDSA
+  community.crypto.openssh_keypair:
+    path: "{{ item.home }}/.ssh/id_rsa"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    type: ecdsa
+    state: present
+    mode: '0400'
+  with_items: "{{ user_info }}"
+  register: sshkey
+  when: "'automationcontroller' in group_names"
+
+# cria um arquivo com a chave publica
+- name: Pegar ecdsa-sha2-nistp256.pub
+  ansible.builtin.copy:
+    content: "{{ item.public_key }}"
+    dest: /tmp/ecdsa-sha2-nistp256.pub
+    mode: '0644'
+  with_items: "{{ sshkey.results }}"
+  when: "'automationcontroller' in group_names"
+
+- name: Pegar ecdsa-sha2-nistp256.pub (flat)
+  ansible.builtin.fetch:
+    src: /tmp/ecdsa-sha2-nistp256.pub
+    dest: ./files/ecdsa-sha2-nistp256.pub
+    flat: true
+  when: "'automationcontroller' in group_names"
+
+#  copia a chave publica para os servidres do cluster openshift
+- name: Copiar ecdsa-sha2-nistp256.pub para os servidores
+  ansible.posix.authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ lookup('file', './files/ecdsa-sha2-nistp256.pub') }}"
+  with_items: "{{ user_info }}"

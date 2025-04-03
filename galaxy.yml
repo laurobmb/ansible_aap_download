@@ -1,0 +1,21 @@
+namespace: laurobmb
+name: ansible_aap_download
+version: 1.0.3
+readme: README.md
+authors:
+- Lauro Gomes <lagomes@redhat.com>
+description: Esta role do Ansible tem como objetivo automatizar o download do Ansible Automation Platform (AAP) em um servidor RHEL Bastion, garantindo que a versão correta, baseada no hash SHA256 especificado, seja baixada e armazenada de maneira organizada.
+license:
+- GPL-2.0-or-later
+license_file: ''
+tags: []
+dependencies: {}
+repository: https://github.com/laurobmb/ansible_aap_download
+documentation: https://github.com/laurobmb/ansible_aap_download/docs/
+homepage: https://github.com/laurobmb
+issues: https://github.com/laurobmb/ansible_aap_download/issues
+build_ignore:
+- '*.pyc'
+- galaxy.yml
+- playbooks/sensitive
+- '*.tar.gz'
