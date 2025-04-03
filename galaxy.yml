@@ -1,6 +1,6 @@
 namespace: laurobmb
 name: ansible_aap_download
-version: 1.0.6
+version: 1.0.7
 readme: README.md
 authors:
 - Lauro Gomes <lagomes@redhat.com>
