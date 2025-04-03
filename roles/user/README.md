@@ -1,37 +1,37 @@
-# ansible_aap_user_setup
-=========
+# ansible_aap_user_setup  
+=========  
 
-Este role cria e configura usuários no sistema para a instalação e operação do **Ansible Automation Platform (AAP)**, incluindo a criação de chaves SSH e permissões de sudo.
+This role creates and configures users on the system for the installation and operation of the **Ansible Automation Platform (AAP)**, including SSH key creation and sudo permissions.  
 
-## Requirements
-------------
+## Requirements  
+------------  
 
-- O Ansible deve ter permissões para criar usuários e modificar arquivos de configuração do sistema.
-- O módulo `community.crypto` deve estar disponível para a geração de chaves OpenSSH.
-- O grupo `automationcontroller` deve estar definido no inventário para ativar a geração e distribuição das chaves SSH.
+- Ansible must have permissions to create users and modify system configuration files.  
+- The `community.crypto` module must be available for OpenSSH key generation.  
+- The `automationcontroller` group must be defined in the inventory to enable the generation and distribution of SSH keys.  
 
-## Role Variables
---------------
+## Role Variables  
+--------------  
 
-As principais variáveis utilizadas pelo role são:
+The main variables used by the role are:  
 
-- **`user_info`**: Lista de dicionários contendo:
-  - `name`: Nome do usuário a ser criado.
-  - `password`: password do usuário.
-  - `home`: Diretório home do usuário.
-  - `key`: Chave SSH pública para autorização.
+- **`user_info`**: List of dictionaries containing:  
+  - `name`: Name of the user to be created.  
+  - `password`: User password.  
+  - `home`: User's home directory.  
+  - `key`: Public SSH key for authorization.  
 
-- **`sshkey.results`**: Armazena as informações da chave SSH gerada.
+- **`sshkey.results`**: Stores information about the generated SSH key.  
 
-## Dependencies
-------------
+## Dependencies  
+------------  
 
-Nenhuma dependência externa de outras roles no Ansible Galaxy.
+No external dependencies from other roles in Ansible Galaxy.  
 
-## Example Playbook
-----------------
+## Example Playbook  
+----------------  
 
-Exemplo de uso do role:
+Example usage of the role:  
 
 ```yaml
 - hosts: servers
@@ -41,14 +41,14 @@ Exemplo de uso do role:
           { name: "admin", password: "password_hash", home: "/home/admin", key: "ssh-rsa AAAAB3..." }
         ] 
       }
-```
+```  
 
-## License
--------
+## License  
+-------  
 
-BSD
+BSD  
 
-## Author Information
-------------------
+## Author Information  
+------------------  
 
-Criado por Lauro Gomes, responsável pela configuração de usuários no ambiente AAP.
+Created by Lauro Gomes, responsible for user configuration in the AAP environment.  

@@ -1,48 +1,48 @@
-# ansible_aap_download
-=========
+# ansible_aap_download  
+=========  
 
-Este role realiza o download e extração do bundle do **Ansible Automation Platform (AAP)**, garantindo a integridade do arquivo e autenticando no portal da Red Hat.
+This role downloads and extracts the **Ansible Automation Platform (AAP)** bundle, ensuring file integrity and authentication with the Red Hat portal.  
 
-## Requirements
-------------
+## Requirements  
+------------  
 
-- O sistema deve ter acesso à internet para baixar o AAP bundle.
-- O usuário que executa o playbook deve ter permissões adequadas para criar diretórios e manipular arquivos.
-- É necessário um **offline_token** válido do portal da Red Hat.
-- O **SHA256** do bundle (`aap_bundle_sha_value`) deve ser fornecido corretamente.
+- The system must have internet access to download the AAP bundle.  
+- The user executing the playbook must have appropriate permissions to create directories and manipulate files.  
+- A valid **offline_token** from the Red Hat portal is required.  
+- The **SHA256** of the bundle (`aap_bundle_sha_value`) must be correctly provided.  
 
-## Role Variables
---------------
+## Role Variables  
+--------------  
 
-As principais variáveis utilizadas pelo role são:
+The main variables used by the role are:  
 
-- **`offline_token`**: Token de autenticação offline para acessar o portal da Red Hat.
-- **`aap_bundle_sha_value`**: Hash SHA256 do bundle do AAP para validação do download.
-- **`user_info`**: Lista contendo informações dos usuários responsáveis pelo armazenamento do bundle.
-- **`bundle_file`**: Armazena os resultados da verificação do bundle no sistema.
+- **`offline_token`**: Offline authentication token for accessing the Red Hat portal.  
+- **`aap_bundle_sha_value`**: SHA256 hash of the AAP bundle for download validation.  
+- **`user_info`**: List containing information about users responsible for storing the bundle.  
+- **`bundle_file`**: Stores the results of the bundle verification on the system.  
 
-## Dependencies
-------------
+## Dependencies  
+------------  
 
-Nenhuma dependência externa de outras roles no Ansible Galaxy.
+No external dependencies from other roles in Ansible Galaxy.  
 
-## Example Playbook
-----------------
+## Example Playbook  
+----------------  
 
-Exemplo de uso do role:
+Example usage of the role:  
 
 ```yaml
 - hosts: servers
   roles:
-    - { role: ansible_aap_download, offline_token: "seu_token", aap_bundle_sha_value: "seu_sha256" }
-```
+    - { role: ansible_aap_download, offline_token: "your_token", aap_bundle_sha_value: "your_sha256" }
+```  
 
-## License
--------
+## License  
+-------  
 
-BSD
+BSD  
 
-## Author Information
-------------------
+## Author Information  
+------------------  
 
-Criado por Lauro Gomes, responsável pela configuração de usuários no ambiente AAP.
+Created by Lauro Gomes, responsible for user configuration in the AAP environment.  
