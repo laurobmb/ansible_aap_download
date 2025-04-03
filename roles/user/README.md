@@ -34,13 +34,22 @@ No external dependencies from other roles in Ansible Galaxy.
 Example usage of the role:  
 
 ```yaml
-- hosts: servers
-  roles:
-    - { role: ansible_aap_user_setup, user_info: 
-        [
-          { name: "admin", password: "password_hash", home: "/home/admin", key: "ssh-rsa AAAAB3..." }
-        ] 
-      }
+---
+- name: Configure Ansible User
+  hosts: automationcontroller
+  gather_facts: true
+  vars:
+    user_info:
+      - name: ansible-user
+        password: <your openssl hash>
+        key: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICGzwrDAfrzylGJsj9i9bcNnduC34FaLLJZd3uzMk/fV user@hulk'
+        home: /opt/aap
+
+  tasks:
+    - name: Import role
+      ansible.builtin.import_role:
+        name: laurobmb.ansible_aap_download.user
+
 ```  
 
 ## License  

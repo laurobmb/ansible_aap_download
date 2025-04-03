@@ -32,9 +32,24 @@ No external dependencies from other roles in Ansible Galaxy.
 Example usage of the role:  
 
 ```yaml
-- hosts: servers
-  roles:
-    - { role: ansible_aap_download, offline_token: "your_token", aap_bundle_sha_value: "your_sha256" }
+---
+- name: Download AAP
+  hosts: automationcontroller
+  gather_facts: true
+  vars:
+    user_info:
+      - name: ansible-user
+        password: <your openssl hash>
+        key: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICGzwrDAfrzylGJsj9i9bcNnduC34FaLLJZd3uzMk/fV user@hulk'
+        home: /opt/aap
+
+  tasks:
+    - name: Import role
+      ansible.builtin.import_role:
+        name: laurobmb.ansible_aap_download.download
+      vars:
+        aap_bundle_sha_value: 88e40728986ecaa04cf3c2820ed0f4e5c85ae88c52353cc695dd5be9deab9725
+        offline_token: 88e40728986ecaa04....
 ```  
 
 ## License  
